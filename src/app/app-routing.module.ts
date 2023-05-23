@@ -1,21 +1,17 @@
-import { ManageComponent } from './manage/manage.component';
-import { LoginComponent } from './login/login.component';
 import { NotfoundComponent } from './notfound/notfound.component';
-import { HomeComponent } from './manage/home/home.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TodoComponent } from './manage/todo/todo.component';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
+  {
+    path: 'login',
+    loadChildren: () =>
+      import('./login/login.module').then((m) => m.LoginModule),
+  },
   {
     path: 'manage',
-    component: ManageComponent,
-    children: [
-      { path: 'home', component: HomeComponent },
-      { path: 'todo', component: TodoComponent },
-      { path: '', redirectTo: 'home', pathMatch: 'full' }
-    ]
+    loadChildren: () =>
+      import('./manage/manage.module').then((m) => m.ManageModule),
   },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', component: NotfoundComponent },
@@ -23,6 +19,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
