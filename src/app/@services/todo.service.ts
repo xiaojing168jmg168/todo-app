@@ -3,12 +3,12 @@ import { Todo, TodoClass, TodoStatusType } from '../@models/todo.model';
 import { TodoApiService } from './todo-api.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TodoService {
   toggleAllBtn = false;
   nowTodoStatusType = TodoStatusType.All;
-  todoDataList: Todo[] = [];  
+  todoDataList: Todo[] = [];
 
   get nowTodoList() {
     let list: Todo[] = [];
@@ -29,21 +29,21 @@ export class TodoService {
   }
 
   get todoActive(): Todo[] {
-    return this.todoDataList.filter(data => !data.Status);
+    return this.todoDataList.filter((data) => !data.Status);
   }
 
   get todoCompleted(): Todo[] {
-    return this.todoDataList.filter(data => data.Status);
+    return this.todoDataList.filter((data) => data.Status);
   }
-  
+
   constructor(private todoApiService: TodoApiService) {
     this.getData();
   }
 
   getData() {
-    this.todoApiService.取得資料().subscribe(data => {
+    this.todoApiService.取得資料().subscribe((data) => {
       this.todoDataList = data;
-      this.todoDataList.forEach(data2 => {
+      this.todoDataList.forEach((data2) => {
         data2.CanEdit = true;
         data2.Editing = false;
       });
@@ -55,13 +55,13 @@ export class TodoService {
     const seqno = new Date().getTime();
     const todo: Todo = new TodoClass(value, false, seqno);
     this.todoDataList.push(todo);
-    this.todoApiService.新增(todo).subscribe(data => {
-      this.todoDataList.forEach(data2 => {
+    this.todoApiService.新增(todo).subscribe((data) => {
+      this.todoDataList.forEach((data2) => {
         if (data2.Seqno === seqno) {
           data2.TodoId = data.TodoId;
           data2.CanEdit = true;
         }
-      })
+      });
     });
   }
 
@@ -79,12 +79,12 @@ export class TodoService {
 
   delete(item: Todo) {
     this.todoApiService.刪除(item).subscribe();
-    this.todoDataList = this.todoDataList.filter(data => data !== item);
+    this.todoDataList = this.todoDataList.filter((data) => data !== item);
   }
 
   toggleAll() {
     this.toggleAllBtn = !this.toggleAllBtn;
-    this.todoDataList.forEach(data => {
+    this.todoDataList.forEach((data) => {
       data.Status = this.toggleAllBtn;
     });
 
@@ -103,9 +103,8 @@ export class TodoService {
       this.toggleAllBtn = false;
     }
   }
-  
+
   setTodoStatusType(type: number) {
     this.nowTodoStatusType = type;
   }
-
 }

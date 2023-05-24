@@ -3,12 +3,12 @@ import { Injectable } from '@angular/core';
 import { Todo } from '../@models/todo.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TodoApiService {
   private url = '/api/todo2_16';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   取得資料() {
     return this.http.get<Todo[]>(this.url);
@@ -33,5 +33,4 @@ export class TodoApiService {
   刪除已完成事項() {
     return this.http.delete(`${this.url}/clearCompleted`);
   }
-
 }
