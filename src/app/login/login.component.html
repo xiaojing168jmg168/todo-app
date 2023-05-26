@@ -1,10 +1,20 @@
 <div class="mzone">
   <div class="titleZone">ToDo App</div>
   <div>
-    Username：<input type="text" class="form-control" placeholder="Username" />
+    Username：<input
+      type="text"
+      [(ngModel)]="loginValue.AccountName"
+      class="form-control"
+      placeholder="Username"
+    />
   </div>
   <div>
-    Password：<input type="text" class="form-control" placeholder="Password" />
+    Password：<input
+      type="text"
+      [(ngModel)]="loginValue.Password"
+      class="form-control"
+      placeholder="Password"
+    />
   </div>
   <button class="btn btn-success text-white mm" (click)="login()" type="submit">
     login
